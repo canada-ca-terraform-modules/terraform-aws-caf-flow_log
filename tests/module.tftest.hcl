@@ -161,8 +161,9 @@ run "naming_custom_role_and_log_group_override" {
 # default_values
 # A vpc_key alone gives a CloudWatch flow log of ALL traffic with a 731-day log group.
 # ---------------------------------------------------------------------------
+# Applied against the mock provider: the created log group and role ARNs are only known after apply.
 run "default_values" {
-  command = plan
+  command = apply
 
   assert {
     condition     = aws_flow_log.this.vpc_id == "vpc-0123456789abcdef0"
