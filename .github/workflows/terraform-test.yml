@@ -1,0 +1,28 @@
+name: Terraform Validate and Test
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v2.0.2
+
+      - name: Tofu Init
+        run: tofu init -backend=false
+
+      - name: Tofu Format Check
+        run: tofu fmt -recursive -check
+
+      - name: Tofu Validate
+        run: tofu validate
+
+      - name: Tofu Test
+        run: tofu test
